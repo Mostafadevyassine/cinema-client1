@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Book Movie - Smart Cinema</title>
+  <link rel="stylesheet" href="../style/styles.css" />
+</head>
+<body>
+  <header class="main-header">
+    <h1>Book Your Tickets</h1>
+  </header>
+
+  <main class="main-content">
+    <section class="form-section">
+      <h2>Booking</h2>
+      <form id="booking-form">
+        <label for="seats">Number of Seats</label>
+        <input type="number" id="seats" name="seats" min="1" value="1" required />
+
+        <p><strong>Price per Ticket:</strong> <span id="price">$0.00</span></p>
+
+        <button type="submit">Book</button>
+      </form>
+    </section>
+  </main>
+
+  <script type="module">
+    import axios from 'https://cdn.skypack.dev/axios';
+  
+    // Get movie_id from URL
+    const movieId = new URLSearchParams(window.location.search).get('movie_id');
+    const priceElement = document.getElementById('price');
+    const form = document.getElementById('booking-form');
+  
+    let price = 0;
+  
+    // Get movie details from backend
+    async function showMovieInfo() {
+      try {
+        const response = await axios.get(`http://localhost/article-server/controllers/get_movie.php?movie_id=${movieId}`);
+        price = response.data.price;
+        priceElement.textContent = `$${price}`; // Show price in page
+      } catch {
+        alert("Could not load movie details.");
+      }
+    }
+  
+    // When user submits the form
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const seats = document.getElementById('seats').value;
+  
+      try {
+        const response = await axios.post('http://localhost/article-server/controllers/book_movie.php', {
+          user_id: 1, // Hardcoded for now
+          movie_id: movieId,
+          seat_count: seats
+        });
+  
+        alert(response.data.message); // "This movie is booked for you."
+      } catch {
+        alert("Booking failed.");
+      }
+    });
+  
+    showMovieInfo(); // Run it when page loads
+  </script>
+</body>
+</html>

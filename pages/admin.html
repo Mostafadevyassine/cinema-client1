@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Panel - Add Movie</title>
+  <link rel="stylesheet" href="../style/styles.css" />
+</head>
+<body>
+  <header class="main-header">
+    <h1>Admin Panel</h1>
+  </header>
+
+  <main class="main-content">
+    <section class="form-section">
+      <h2>Add New Movie</h2>
+      <form class="movie-form">
+        <label for="name">Movie Name</label>
+        <input type="text" id="name" name="name" required />
+
+        <label for="poster">Poster Image</label>
+        <input type="file" id="poster" name="poster" accept="image/*" required />
+
+        <label for="release_date">Release Date</label>
+        <input type="date" id="release_date" name="release_date" required />
+
+        <label for="duration">Duration (minutes)</label>
+        <input type="number" id="duration" name="duration" required />
+
+        <label for="language">Language</label>
+        <input type="text" id="language" name="language" required />
+
+        <label for="price">Ticket Price ($)</label>
+        <input type="number" id="price" name="price" step="0.01" required />
+
+        <button type="submit">Add Movie</button>
+      </form>
+    </section>
+  </main>
+
+  <script type="module">
+    import axios from 'https://cdn.skypack.dev/axios';
+  
+    const form = document.querySelector('.movie-form');
+  
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+  
+      const file = document.getElementById('poster').files[0];
+      if (!file) {
+        alert("Please select a poster image.");
+        return;
+      }
+  
+      const reader = new FileReader();
+  
+      reader.onload = async () => {
+        const movieData = {
+          name: document.getElementById('name').value,
+          poster: reader.result, // base64 image
+          release_date: document.getElementById('release_date').value,
+          duration: document.getElementById('duration').value,
+          language: document.getElementById('language').value,
+          price: document.getElementById('price').value
+        };
+  
+        try {
+          const response = await axios.post('http://localhost/article-server/controllers/movie_controller.php', movieData);
+          alert(response.data.message); // show backend message
+          form.reset();
+        } catch {
+          alert("Failed to add movie.");
+        }
+      };
+  
+      reader.readAsDataURL(file); // convert image to base64
+    });
+  </script>
+</body>
+</html>
