@@ -1,0 +1,133 @@
+
+/* Reset basic styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    padding: 2rem;
+  }
+  
+  /* General container layout */
+  .main-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .main-header h1 {
+    font-size: 2.5rem;
+    color: #222;
+  }
+  
+  /* Main content area */
+  .main-content {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 2rem;
+    max-width: 60rem;
+    margin: 0 auto;
+    width: 100%;
+  }
+  
+  /* Form sections */
+  .form-section {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 0 1rem rgba(0,0,0,0.1);
+    width: 100%;
+  }
+  
+  /* Forms */
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  /* Labels and inputs */
+  label {
+    font-size: 1rem;
+    font-weight: bold;
+  }
+  
+  input,
+  button {
+    font-size: 1rem;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    border: 1px solid #ccc;
+    width: 100%;
+  }
+  
+  input:focus {
+    outline: none;
+    border-color: #0077cc;
+  }
+  
+  /* Buttons */
+  button {
+    background-color: #0077cc;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #005fa3;
+  }
+  
+  /* Movie grid */
+  .movies-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+  }
+  
+  /* Movie cards */
+  .movie-card {
+    background-color: white;
+    padding: 1rem;
+    border-radius: 1rem;
+    width: 100%;
+    max-width: 14rem;
+    box-shadow: 0 0 1rem rgba(0,0,0,0.05);
+    cursor: pointer;
+    text-align: center;
+    transition: transform 0.2s ease;
+  }
+  
+  .movie-card:hover {
+    transform: scale(1.03);
+  }
+  
+  .movie-poster {
+    width: 100%;
+    border-radius: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .movie-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+  }
+  
+  /* Paragraph spacing (used for prices and messages) */
+  p {
+    font-size: 1rem;
+  }
+  
+  /* Text under buttons or forms */
+  .form-section p {
+    margin-top: 1rem;
+    text-align: center;
+  }
