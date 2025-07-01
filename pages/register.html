@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Register - Smart Cinema</title>
+  <link rel="stylesheet" href="../style/styles.css" />
+</head>
+<body>
+  <header class="main-header">
+    <h1>Smart Cinema Registration</h1>
+  </header>
+
+  <main class="main-content">
+    <section class="form-section">
+        <form id="registerForm" class="movie-form register-form">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" required />
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required />
+
+       
+        <label for="birth_date">Date of Birth</label>
+        <input type="date" id="birth_date" name="birth_date" required />
+
+        <label for="favorite_genres">Favorite Genres</label>
+        <input type="text" id="favorite_genres" name="favorite_genres" placeholder="e.g. Action, Comedy" required />
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required />
+
+        
+
+        <button type="submit">Register</button>
+      </form>
+    </section>
+  </main>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<!-- using axious to register  -->
+<script>
+  const form = document.getElementById("registerForm");
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault(); // Prevent actual form submission
+
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    const birthDate = document.getElementById("birth_date").value;
+    const favoriteGenres = document.getElementById("favorite_genres").value;
+
+    // Send data to backend using Axios GET
+    axios.get('http://localhost/article-server/controllers/user_registered.php', {
+      params: {
+        action: "create",
+        email: email,
+        password: password,
+        full_name: name,
+        date_of_birth: birthDate,
+        favorite_genres: favoriteGenres
+      }
+    })
+    .then(response => {
+      alert(response.data.message);
+      if (response.data.message === "Welcome!") {
+        window.location.href = "../index.html";
+      }
+    })
+    .catch(error => {
+      alert("Registration failed. Server error.");
+      console.error(error);
+    });
+  });
+</script>
+</body>
+</html>

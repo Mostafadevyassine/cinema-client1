@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login - Smart Cinema</title>
+  <link rel="stylesheet" href="../style/styles.css" />
+</head>
+<body>
+  <header>
+    <h1>Smart Cinema Login</h1>
+  </header>
+
+  <main>
+    <section class="form-section" id="login-form" >
+      <form class="login-form">
+        <label for="email">Email </label>
+        <input type="text" id="email" name="email" required />
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required />
+
+        <button type="submit">Log In</button>
+      </form>
+      <p>Don't have an account?</p>
+      <button id="goToRegister">Register</button>
+    </section>
+  </main>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    document.getElementById("goToRegister").addEventListener("click", () => {
+      window.location.href = "register.html";
+    });
+    const form = document.getElementById("login-form");
+
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      axios.get('http://localhost/article-server/controllers/login_controller.php', {
+        params: {
+          actionn: "login",
+          email:email,
+          password:password
+        }
+      })
+      .then(response => {
+        alert(response.data.message);
+        if (response.data.message.startsWith("Welcome")) {
+          window.location.href = "../index.html";
+        }
+      })
+      .catch(error => {
+        alert("Login failed. Server error.");
+        console.error(error);
+      });
+    });
+  </script>
+  </body>
+</html>
