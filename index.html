@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Smart Cinema</title>
+  <link rel="stylesheet" href="style/styles.css" />
+</head>
+<body>
+  <header class="main-header">
+    <h1>Smart Cinema</h1>
+  </header>
+
+  <main class="main-content">
+    <section class="movies-grid">
+      <!-- Movies will be dynamically inserted here -->
+    </section>
+  </main>
+
+  
+
+    <script type="module">
+  import axios from 'https://cdn.skypack.dev/axios';
+
+  const moviesGrid = document.querySelector('.movies-grid');
+
+  async function loadMovies() {
+    try {
+      const res = await axios.get('http://localhost/article-server/controllers/get_movies.php');
+      const movies = res.data;
+
+      // Clear grid
+      moviesGrid.innerHTML = "";
+
+      // Add movie cards
+      movies.map(movie => {
+        moviesGrid.innerHTML += `
+          <div class="movie-card" onclick="window.location.href='pages/booking.html?movie_id=${movie.id}'">
+            <img src="${movie.poster}" alt="${movie.name}" class="movie-poster">
+            <h2 class="movie-title">${movie.name}</h2>
+          </div>
+        `;
+      });
+
+    } catch (error) {
+      moviesGrid.innerHTML = "<p>Could not load movies.</p>";
+    }
+  }
+
+  loadMovies();
+  </script>
+</body>
+</html>
